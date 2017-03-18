@@ -34,7 +34,6 @@ public class TetrisApp {
 		initialize();
 	}
 
-
     /**
 	 * Initialize the contents of the frame.
 	 */
