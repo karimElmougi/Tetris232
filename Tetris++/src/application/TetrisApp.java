@@ -34,11 +34,12 @@ public class TetrisApp {
 		initialize();
 	}
 
-	/**
+
+    /**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("Tetris++");
 		frame.setBounds(100, 100, 460, 516);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
