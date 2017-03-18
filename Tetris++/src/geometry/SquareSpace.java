@@ -1,5 +1,7 @@
 package geometry;
 
+import gameShapes.Square;
+
 public class SquareSpace {
 	private int x;
 	private int y;
@@ -7,9 +9,9 @@ public class SquareSpace {
 	private int column;
 	private int line;
 	
-	public SquareSpace(int x, int y, int dim, int column, int line){
-		this.x = x;
-		this.y = y;
+	public SquareSpace(int dim, int column, int line){
+		this.x = column*dim;
+		this.y = line*dim;
 		dimension = dim;
 		this.column = column;
 		this.line = line;

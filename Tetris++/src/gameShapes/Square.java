@@ -15,12 +15,19 @@ public class Square {
 	
 	public void draw(Graphics2D g2d){
 		AffineTransform matBackup = new AffineTransform(g2d.getTransform());
-		g2d.setColor(Color.YELLOW);
 		g2d.fillRect(space.getX(), space.getY(), space.getDim(), space.getDim());
 		g2d.setTransform(matBackup);
 	}
 	
 	public void down(SquareSpace[][] grid){
 		space = grid[space.getColumn()][space.getLine()+1];
+	}
+	
+	public void left(SquareSpace[][] grid){
+		space = grid[space.getColumn()-1][space.getLine()];
+	}
+	
+	public void right(SquareSpace[][] grid){
+		space = grid[space.getColumn()+1][space.getLine()];
 	}
 }

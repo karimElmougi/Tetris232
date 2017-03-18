@@ -4,16 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import gameShapes.Square;
+import gameShapes.Tetromino;
 import geometry.GridOverlay;
 import geometry.SquareSpace;
 
@@ -21,7 +20,8 @@ public class GamePanel extends JPanel implements Runnable{
 	private GridOverlay overlay;
 	private boolean initialized = false;
 	private SquareSpace[][] gameGrid = new SquareSpace[10][20];
-	private Square test;
+	
+	private Tetromino test;
 
 	public GamePanel(){
 		setPreferredSize(new Dimension(250, 500));
@@ -41,8 +41,14 @@ public class GamePanel extends JPanel implements Runnable{
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == 40){
+				if(e.getKeyCode() == KeyEvent.VK_DOWN){
 					test.down(gameGrid);
+				}
+				if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+					test.right(gameGrid);
+				}
+				if(e.getKeyCode() == KeyEvent.VK_LEFT){
+					test.left(gameGrid);
 				}
 				repaint();
 			}
@@ -64,13 +70,13 @@ public class GamePanel extends JPanel implements Runnable{
 
 			for(int i = 0; i<10; i++){
 				for(int j = 0; j<20; j++){
-					gameGrid[i][j] = new SquareSpace(i*squareSize, j*squareSize, squareSize, i, j);
+					gameGrid[i][j] = new SquareSpace(squareSize, i, j);
 				}
 			}
 			
-			
-			test = new Square(gameGrid[4][2]);
+			test = new Tetromino(gameGrid, 2, 4);
 			initialized = true;
+			start();
 		}
 	}
 	
@@ -85,7 +91,23 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	@Override
 	public void run() {
-		
+		boolean testb = true;
+		while(testb){
+			test.down(gameGrid);
+			repaint();
+			
+			try {
+				Thread.sleep(1000);
+			} 
+			catch (InterruptedException e) {
+				System.out.println("Error during the animation");
+			}
+		}
+	}
+	
+	public void start(){
+		Thread proc = new Thread(GamePanel.this);
+		proc.start();
 	}
 
 }
