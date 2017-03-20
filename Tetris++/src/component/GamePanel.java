@@ -6,20 +6,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
-import gameShapes.Square;
 import gameShapes.Tetromino;
 import geometry.GridOverlay;
-import geometry.SquareSpace;
+import geometry.SpaceGrid;
 
 public class GamePanel extends JPanel implements Runnable{
+	private static final long serialVersionUID = 5090151066867436213L;
 	private GridOverlay overlay;
 	private boolean initialized = false;
-	private SquareSpace[][] gameGrid = new SquareSpace[10][20];
+	private SpaceGrid gameGrid;
 	
 	private Tetromino test;
 
@@ -28,27 +26,17 @@ public class GamePanel extends JPanel implements Runnable{
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				test.down(gameGrid);
-				System.out.println("TEST");
-				repaint();
-
-			}
-		});
-		
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_DOWN){
-					test.down(gameGrid);
+					test.goDown();
 				}
 				if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-					test.right(gameGrid);
+					test.goRight();
 				}
 				if(e.getKeyCode() == KeyEvent.VK_LEFT){
-					test.left(gameGrid);
+					test.goLeft();
 				}
 				repaint();
 			}
@@ -67,16 +55,12 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			setSize(10*squareSize, 20*squareSize);
 			overlay = new GridOverlay(squareSize, 10, 20);
-
-			for(int i = 0; i<10; i++){
-				for(int j = 0; j<20; j++){
-					gameGrid[i][j] = new SquareSpace(squareSize, i, j);
-				}
-			}
 			
-			test = new Tetromino(gameGrid, 2, 4);
+			gameGrid = new SpaceGrid(10, 20, squareSize);
+
+			test = new Tetromino(gameGrid.at(4, 2));
 			initialized = true;
-			start();
+			//start();
 		}
 	}
 	
@@ -85,15 +69,15 @@ public class GamePanel extends JPanel implements Runnable{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		initialize();
-		overlay.draw(g2d);
 		test.draw(g2d);
+		overlay.draw(g2d);
 	}
 	
 	@Override
 	public void run() {
 		boolean testb = true;
 		while(testb){
-			test.down(gameGrid);
+			test.goDown();
 			repaint();
 			
 			try {
