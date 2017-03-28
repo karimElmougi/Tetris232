@@ -19,7 +19,7 @@ public class GamePanel extends JPanel implements Runnable{
 	private boolean initialized = false;
 	private SpaceGrid gameGrid;
 	
-	private Tetromino test;
+	private Tetromino activePiece; 
 
 	public GamePanel(){
 		setPreferredSize(new Dimension(250, 500));
@@ -30,13 +30,13 @@ public class GamePanel extends JPanel implements Runnable{
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_DOWN){
-					test.goDown();
+					activePiece.goDown();
 				}
 				if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-					test.goRight();
+					activePiece.goRight();
 				}
 				if(e.getKeyCode() == KeyEvent.VK_LEFT){
-					test.goLeft();
+					activePiece.goLeft();
 				}
 				repaint();
 			}
@@ -49,6 +49,10 @@ public class GamePanel extends JPanel implements Runnable{
 		});
 	}
 	
+	public void spawnTetromino(int y, int x) {
+	    activePiece = new Tetromino(gameGrid.at(y, x), this);
+	}
+	
 	private void initialize(){
 		if(!initialized){
 			int squareSize = getWidth()/10;
@@ -58,9 +62,10 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			gameGrid = new SpaceGrid(10, 20, squareSize);
 
-			test = new Tetromino(gameGrid.at(4, 2));
+			activePiece = new Tetromino(gameGrid.at(4, 2) , this);
 			initialized = true;
-			//start();
+			
+			start();
 		}
 	}
 	
@@ -69,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		initialize();
-		test.draw(g2d);
+		gameGrid.draw(g2d);  // on dessine toutes les cases du tableau
 		overlay.draw(g2d);
 	}
 	
@@ -77,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void run() {
 		boolean testb = true;
 		while(testb){
-			test.goDown();
+			activePiece.goDown();
 			repaint();
 			
 			try {

@@ -85,4 +85,8 @@ public class SpaceNode {
 		isOccupied = b;
 	}
 	
+	public boolean getOccupied() {
+	    return isOccupied;
+	}
+	
 }

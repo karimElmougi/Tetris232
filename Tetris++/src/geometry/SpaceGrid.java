@@ -1,5 +1,9 @@
 package geometry;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+
 public class SpaceGrid {
 	SpaceNode[][] grid;
 	
@@ -31,5 +35,16 @@ public class SpaceGrid {
 	
 	public SpaceNode at(int columns, int lines){
 		return grid[columns][lines];
+	}
+	
+	public void draw(Graphics2D g2d) { // 
+	    AffineTransform matBackup = new AffineTransform(g2d.getTransform());
+        g2d.setColor(Color.YELLOW);
+        
+        for(SpaceNode[] squares : grid) // dessine toutes les pieces continuellement
+            for(SpaceNode square : squares)
+                square.drawSquare(g2d);
+        
+        g2d.setTransform(matBackup);
 	}
 }

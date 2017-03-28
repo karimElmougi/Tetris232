@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
+import component.GamePanel;
 import geometry.SpaceNode;
 
 public class Tetromino {
@@ -12,7 +13,12 @@ public class Tetromino {
 	private SpaceNode square3;
 	private SpaceNode square4;
 	
-	public Tetromino(SpaceNode space){
+	private boolean active; // va servir a savoir quand spwaner les autre pieces
+	private GamePanel game; // Pour pouvoir spawner des nouveaux tetrominos! LOL
+	
+	public Tetromino(SpaceNode space, GamePanel fame){
+	    game = fame; // Rock'n'roll baby! LOL  -Loli 
+	    active = true;
 		square1 = space;
 		square2 = space.getRight();
 		square3 = space.getDown();
@@ -36,44 +42,52 @@ public class Tetromino {
 	}
 	
 	public void goDown(){
-		if(square4.getDown() == null){
+		if(square4.getDown() == null || square3.getDown().getOccupied() || square4.getDown().getOccupied()){ //permet de detecter la collision par en-bas
+		    active = false; // qd active est faux on transfet le controle aux  enfants (autre pieces)
+		    game.spawnTetromino(4, 2); //(spawn la nouvelle piece)
 			return;
 		}
-		square1.setOccupied(false);
-		square2.setOccupied(false);
-		square4 = square4.getDown();
-		square3 = square3.getDown();
-		square2 = square2.getDown();
-		square1 = square1.getDown();
-		square3.setOccupied(true);
-		square4.setOccupied(true);
+		if(active) {
+		    square1.setOccupied(false);
+	        square2.setOccupied(false);
+	        square4 = square4.getDown();
+	        square3 = square3.getDown();
+	        square2 = square2.getDown();
+	        square1 = square1.getDown();
+	        square3.setOccupied(true);
+	        square4.setOccupied(true);
+		}
 	}
 	
 	public void goLeft(){
 		if(square1.getLeft() == null){
 			return;
 		}
-		square2.setOccupied(false);
-		square4.setOccupied(false);
-		square1 = square1.getLeft();
-		square3 = square3.getLeft();
-		square2 = square2.getLeft();
-		square4 = square4.getLeft();
-		square1.setOccupied(true);
-		square3.setOccupied(true);
+		if(active) {
+		    square2.setOccupied(false);
+		    square4.setOccupied(false);
+		    square1 = square1.getLeft();
+		    square3 = square3.getLeft();
+		    square2 = square2.getLeft();
+		    square4 = square4.getLeft();
+		    square1.setOccupied(true);
+		    square3.setOccupied(true);
+		}
 	}
 	
 	public void goRight(){
 		if(square2.getRight() == null){
-			return;
+		    return;
 		}
-		square1.setOccupied(false);
-		square3.setOccupied(false);
-		square2 = square2.getRight();
-		square4 = square4.getRight();
-		square1 = square1.getRight();
-		square3 = square3.getRight();
-		square2.setOccupied(true);
-		square4.setOccupied(true);
+		if(active) {
+		    square1.setOccupied(false);
+		    square3.setOccupied(false);
+		    square2 = square2.getRight();
+		    square4 = square4.getRight();
+		    square1 = square1.getRight();
+		    square3 = square3.getRight();
+		    square2.setOccupied(true);
+		    square4.setOccupied(true);
+		}
 	}
 }
