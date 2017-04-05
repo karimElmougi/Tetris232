@@ -40,11 +40,10 @@ public class SpaceGrid {
 	public void draw(Graphics2D g2d) { // 
 	    AffineTransform matBackup = new AffineTransform(g2d.getTransform());
         g2d.setColor(Color.YELLOW);
-        
         for(SpaceNode[] squares : grid) // dessine toutes les pieces continuellement
-            for(SpaceNode square : squares)
-                square.drawSquare(g2d);
-        
+            for(SpaceNode square : squares){
+            	square.drawSquare(g2d);
+            }
         g2d.setTransform(matBackup);
 	}
 }

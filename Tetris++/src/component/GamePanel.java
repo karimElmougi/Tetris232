@@ -6,10 +6,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
+import gameShapes.I_Bar;
+import gameShapes.J_Bar;
+import gameShapes.L_Bar;
+import gameShapes.O_Bar;
+import gameShapes.S_Bar;
+import gameShapes.T_Bar;
 import gameShapes.Tetromino;
+import gameShapes.Z_Bar;
 import geometry.GridOverlay;
 import geometry.SpaceGrid;
 
@@ -19,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
 	private boolean initialized = false;
 	private SpaceGrid gameGrid;
 	
-	private Tetromino activePiece; 
+	private Tetromino activePiece;
 
 	public GamePanel(){
 		setPreferredSize(new Dimension(250, 500));
@@ -49,8 +57,42 @@ public class GamePanel extends JPanel implements Runnable{
 		});
 	}
 	
-	public void spawnTetromino(int y, int x) {
-	    activePiece = new Tetromino(gameGrid.at(y, x), this);
+	/********************************************************************/
+	/* ICI ON A DE TRÈS TRÈS BELLES POSSIBILITÉS DE FAIRE DU REFACTORING*/
+	/********************************************************************/
+
+	public void spawnTetromino(int x, int y) {
+		Random generator = new Random();
+		int position = generator.nextInt(5);
+	    switch(position){
+	    	case 0:
+	    		activePiece = new O_Bar(gameGrid.at(x, y) , this);
+	    		break;
+	    		
+	    	case 1:
+	    		activePiece = new J_Bar(gameGrid.at(x, y) , this);
+	    		break;
+	    		
+	    	case 2:
+	    		activePiece = new L_Bar(gameGrid.at(x, y) , this);
+	    		break;
+	    		
+	    	case 3:
+	    		activePiece = new T_Bar(gameGrid.at(x, y) , this);
+	    		break;
+	    		
+	    	case 4:
+	    		activePiece = new I_Bar(gameGrid.at(x, y) , this);
+	    		break;
+	    		
+	    	case 5:
+	    		activePiece = new S_Bar(gameGrid.at(x, y) , this);
+	    		break;
+	    		
+	    	case 6:
+	    		activePiece = new Z_Bar(gameGrid.at(x, y) , this);
+	    		break;
+	    }
 	}
 	
 	private void initialize(){
@@ -62,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			gameGrid = new SpaceGrid(10, 20, squareSize);
 
-			activePiece = new Tetromino(gameGrid.at(4, 2) , this);
+			spawnTetromino(4, 2);
 			initialized = true;
 			
 			start();
@@ -72,10 +114,11 @@ public class GamePanel extends JPanel implements Runnable{
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
+		Graphics2D g2d = (Graphics2D) g;	
 		initialize();
 		gameGrid.draw(g2d);  // on dessine toutes les cases du tableau
 		overlay.draw(g2d);
+		
 	}
 	
 	@Override
