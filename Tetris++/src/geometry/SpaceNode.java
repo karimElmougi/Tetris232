@@ -1,8 +1,10 @@
 package geometry;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class SpaceNode {
+	protected Color color;
 	private SpaceNode right;
 	private SpaceNode left;
 	private SpaceNode up;
@@ -87,5 +89,13 @@ public class SpaceNode {
 	
 	public boolean getOccupied() {
 	    return isOccupied;
+	}
+	
+	public void setNodeColor(Color c){
+		color = c;
+	}
+	
+	public Color getColor(){
+		return color;
 	}
 }

@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public void spawnTetromino(int x, int y) {
 		Random generator = new Random();
-		int position = generator.nextInt(5);
+		int position = generator.nextInt(7);
 	    switch(position){
 	    	case 0:
 	    		activePiece = new O_Bar(gameGrid.at(x, y) , this);
@@ -93,6 +93,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    		activePiece = new Z_Bar(gameGrid.at(x, y) , this);
 	    		break;
 	    }
+	    activePiece.setTheColor();
 	}
 	
 	private void initialize(){
@@ -117,8 +118,7 @@ public class GamePanel extends JPanel implements Runnable{
 		Graphics2D g2d = (Graphics2D) g;	
 		initialize();
 		gameGrid.draw(g2d);  // on dessine toutes les cases du tableau
-		overlay.draw(g2d);
-		
+		overlay.draw(g2d);	
 	}
 	
 	@Override

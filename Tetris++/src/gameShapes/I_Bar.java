@@ -2,6 +2,8 @@ package gameShapes;
 
 
 
+import java.awt.Color;
+
 import component.GamePanel;
 import geometry.SpaceNode;
 
@@ -28,6 +30,7 @@ public class I_Bar extends Tetromino{
 	        square2 = square2.getDown();
 	        square1 = square1.getDown();
 	        square4.setOccupied(true);
+			setTheColor();
 		}
 	}
 	
@@ -48,6 +51,7 @@ public class I_Bar extends Tetromino{
 		    square2.setOccupied(true);
 		    square3.setOccupied(true);
 		    square4.setOccupied(true);
+		 	setTheColor();   
 		}
 	}
 	
@@ -55,7 +59,7 @@ public class I_Bar extends Tetromino{
 		if(square1.getRight() == null || square1.getRight().getOccupied() ||  square2.getRight().getOccupied() ||  square3.getRight().getOccupied() ||  square4.getRight().getOccupied()){
 			return;
 		}
-		if(active) {
+		if(active) {		
 			square1.setOccupied(false);
 		    square2.setOccupied(false);
 		    square3.setOccupied(false);
@@ -68,6 +72,14 @@ public class I_Bar extends Tetromino{
 		    square2.setOccupied(true);
 		    square3.setOccupied(true);
 		    square4.setOccupied(true);
+		    setTheColor();
 		}
+	}
+	
+	public void setTheColor(){
+		square1.setNodeColor(Color.BLUE);
+		square2.setNodeColor(Color.BLUE);
+		square3.setNodeColor(Color.BLUE);
+		square4.setNodeColor(Color.BLUE);
 	}
 }

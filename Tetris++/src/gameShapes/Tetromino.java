@@ -29,7 +29,6 @@ public abstract class Tetromino {
 
 	public void draw(Graphics2D g2d){
 		AffineTransform matBackup = new AffineTransform(g2d.getTransform());
-
 		square1.drawSquare(g2d);
 		square2.drawSquare(g2d);
 		square3.drawSquare(g2d);
@@ -43,4 +42,6 @@ public abstract class Tetromino {
 	public abstract void goLeft();
 	
 	public abstract void goRight();
+	
+	public abstract void setTheColor();
 }
