@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	/********************************************************************/
-	/* ICI ON A DE TRÈS TRÈS BELLES POSSIBILITÉS DE FAIRE DU REFACTORING*/
+	/* ICI ON A DE TRï¿½S TRï¿½S BELLES POSSIBILITï¿½S DE FAIRE DU REFACTORING*/
 	/********************************************************************/
 
 	public void spawnTetromino(int x, int y) {
@@ -66,31 +66,31 @@ public class GamePanel extends JPanel implements Runnable{
 		int position = generator.nextInt(7);
 	    switch(position){
 	    	case 0:
-	    		activePiece = new O_Bar(gameGrid.at(x, y) , this);
+	    		activePiece = new O_Bar(gameGrid.at(x, y));
 	    		break;
 	    		
 	    	case 1:
-	    		activePiece = new J_Bar(gameGrid.at(x, y) , this);
+	    		activePiece = new J_Bar(gameGrid.at(x, y));
 	    		break;
 	    		
 	    	case 2:
-	    		activePiece = new L_Bar(gameGrid.at(x, y) , this);
+	    		activePiece = new L_Bar(gameGrid.at(x, y));
 	    		break;
 	    		
 	    	case 3:
-	    		activePiece = new T_Bar(gameGrid.at(x, y) , this);
+	    		activePiece = new T_Bar(gameGrid.at(x, y));
 	    		break;
 	    		
 	    	case 4:
-	    		activePiece = new I_Bar(gameGrid.at(x, y) , this);
+	    		activePiece = new I_Bar(gameGrid.at(x, y));
 	    		break;
 	    		
 	    	case 5:
-	    		activePiece = new S_Bar(gameGrid.at(x, y) , this);
+	    		activePiece = new S_Bar(gameGrid.at(x, y));
 	    		break;
 	    		
 	    	case 6:
-	    		activePiece = new Z_Bar(gameGrid.at(x, y) , this);
+	    		activePiece = new Z_Bar(gameGrid.at(x, y));
 	    		break;
 	    }
 	    activePiece.setTheColor();
@@ -125,7 +125,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public void run() {
 		boolean testb = true;
 		while(testb){
-			activePiece.goDown();
+			if(!activePiece.goDown()){
+				gameGrid.checkFill();
+				spawnTetromino(4,2);
+			}
 			repaint();
 			
 			try {

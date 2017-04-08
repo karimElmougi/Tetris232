@@ -9,7 +9,6 @@ public class SpaceNode {
 	private SpaceNode left;
 	private SpaceNode up;
 	private SpaceNode down;
-	//private Square square = null;
 	private int size;
 	private int column;
 	private int line;

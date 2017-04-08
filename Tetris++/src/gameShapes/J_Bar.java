@@ -7,8 +7,8 @@ import geometry.SpaceNode;
 
 public class J_Bar extends Tetromino{
 
-	public J_Bar(SpaceNode space, GamePanel fame){
-		super(space, fame);
+	public J_Bar(SpaceNode space){
+		super(space);
 		square1 = space;
 		square2 = space.getUp();
 		square3 = space.getDown();
@@ -16,11 +16,11 @@ public class J_Bar extends Tetromino{
 		Occupied();
 	}
 	
-	public void goDown(){
+	public boolean goDown(){
 		if(square4.getDown() == null || square4.getDown().getOccupied() || square3.getDown().getOccupied()){ //permet de detecter la collision par en-bas
 		    active = false; // qd active est faux on transfet le controle aux  enfants (autre pieces)
-		    game.spawnTetromino(4, 2); //(spawn la nouvelle piece)
-			return;
+		    //game.spawnTetromino(4, 2); //(spawn la nouvelle piece)
+			return false;
 		}
 		if(active) {
 		    square2.setOccupied(false);
@@ -33,6 +33,7 @@ public class J_Bar extends Tetromino{
 	        square3.setOccupied(true);
 	        setTheColor();
 		}
+		return true;
 	}
 	
 	public void goLeft(){
