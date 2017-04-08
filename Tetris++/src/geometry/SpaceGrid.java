@@ -8,6 +8,7 @@ import gameShapes.FalseTetromino;
 
 public class SpaceGrid {
 	SpaceNode[][] grid;
+
 	SpaceNode[][] ghostGrid;
 	
 	public SpaceGrid(int columns, int lines, int size){
@@ -103,4 +104,8 @@ public class SpaceGrid {
 			}
 		}
 	}
+	public SpaceNode[][] getGrid() {
+		return grid;
+	}
+
 }

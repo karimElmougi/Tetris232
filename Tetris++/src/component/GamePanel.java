@@ -20,6 +20,7 @@ import gameShapes.Tetromino;
 import gameShapes.Z_Bar;
 import geometry.GridOverlay;
 import geometry.SpaceGrid;
+import saveLoad.Save;
 
 public class GamePanel extends JPanel implements Runnable{
 	private static final long serialVersionUID = 5090151066867436213L;
@@ -28,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable{
 	private SpaceGrid gameGrid;
 	
 	private Tetromino activePiece;
+
 
 	public GamePanel(){
 		setPreferredSize(new Dimension(250, 500));
@@ -48,6 +50,10 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 				if(e.getKeyCode() == KeyEvent.VK_D){
 					//activePiece.rotateClockwise();
+				}
+				if( (e.getKeyCode() == KeyEvent.VK_S) && (e.getModifiers()&KeyEvent.CTRL_MASK) !=0) {
+					Save savefile = new Save(gameGrid);
+					savefile.writeToFile("Fichier.txt");
 				}
 				repaint();
 			}

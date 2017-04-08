@@ -1,7 +1,5 @@
 package saveLoad;
 
-
-import java.awt.Color;
 import java.io.IOException;
 import java.io.PrintWriter;
 
