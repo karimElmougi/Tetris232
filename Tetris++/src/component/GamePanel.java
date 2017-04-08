@@ -6,9 +6,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileFilter;
 import java.util.Random;
+import java.io.*;
 
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+
 
 import gameShapes.I_Bar;
 import gameShapes.J_Bar;
@@ -55,6 +59,45 @@ public class GamePanel extends JPanel implements Runnable{
 					Save savefile = new Save(gameGrid);
 					savefile.writeToFile("Fichier.txt");
 				}
+				/*if(e.getKeyCode() == KeyEvent.VK_L){
+					String filePath = System.getProperty("user.home");
+					File mainDirectory = new File(filePath);
+				    if (!mainDirectory.exists()) {
+				      mainDirectory.mkdir();
+				    }
+				    JFileChooser openFile = new JFileChooser(mainDirectory);
+				    
+				    FileFilter fileTypeFilter = new FileFilter()
+				    {
+				      public boolean accept(File file)
+				      {
+				        if (file.isDirectory()) {
+				          return true;
+				        }
+				        String path = file.getAbsolutePath();
+				        if (path.endsWith(".txt")) {
+				          return true;
+				        }
+				        return false;
+				      }
+				      
+				      public String getDescription()
+				      {
+				        return ".txt";
+				      }
+				    };
+				    openFile.addChoosableFileFilter((javax.swing.filechooser.FileFilter) fileTypeFilter);
+				    openFile.setFileFilter((javax.swing.filechooser.FileFilter) fileTypeFilter);
+				    openFile.showOpenDialog(null);
+				    File fileToLoad = openFile.getSelectedFile();
+				    if ((fileToLoad == null) || (!fileToLoad.getName().endsWith(".txt")))
+				    {
+				      return;
+				    }
+				    //.read(fileToLoad); // loader le fichier
+				    
+				}
+				*/
 				repaint();
 			}
 
