@@ -2,24 +2,22 @@ package gameShapes;
 
 import java.awt.Color;
 
-import component.GamePanel;
 import geometry.SpaceNode;
 
 public class S_Bar extends Tetromino{
 	
-	public S_Bar(SpaceNode space, GamePanel fame){
-		super(space, fame);
+	public S_Bar(SpaceNode space){
+		super(space);
 		square2 = space.getUp();
 		square3 = space.getRight();
 		square4 = space.getRight().getDown();
 		Occupied();
 	}
 	
-	public void goDown(){
+	public boolean goDown(){
 		if(square4.getDown() == null || square4.getDown().getOccupied() || square1.getDown().getOccupied()){ //permet de detecter la collision par en-bas
 		    active = false; // qd active est faux on transfet le controle aux  enfants (autre pieces)
-		    game.spawnTetromino(); //(spawn la nouvelle piece)
-			return;
+			return false;
 		}
 		if(active) {
 		    square2.setOccupied(false);
@@ -32,6 +30,7 @@ public class S_Bar extends Tetromino{
 	        square4.setOccupied(true);
 	        setTheColor();
 		}
+		return true;
 	}
 	
 	public void goLeft(){

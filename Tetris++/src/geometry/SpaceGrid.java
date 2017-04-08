@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
+import gameShapes.FalseTetromino;
+
 public class SpaceGrid {
 	SpaceNode[][] grid;
 	SpaceNode[][] ghostGrid;
@@ -82,5 +84,23 @@ public class SpaceGrid {
             }
         }
         g2d.setTransform(matBackup);
+	}
+	
+	public void checkFill(){
+		for(int ligne = grid[0].length-1; ligne>=0; ligne--){
+			boolean isFull = true;
+			for(int colonne = 0; colonne < grid.length; colonne++){
+				isFull = isFull && grid[colonne][ligne].getOccupied();
+			}
+			if(isFull){
+				for(int colonne = 0; colonne < grid.length; colonne++){
+					grid[colonne][ligne].setOccupied(false);
+				}
+				for(int ligneD = ligne-1; ligneD>=0; ligneD--){
+					FalseTetromino fTetromino = new FalseTetromino(grid[0][ligneD]);
+					fTetromino.goDown();
+				}
+			}
+		}
 	}
 }

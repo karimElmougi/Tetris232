@@ -3,7 +3,6 @@ package gameShapes;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
-import component.GamePanel;
 import geometry.SpaceNode;
 
 public abstract class Tetromino {
@@ -13,10 +12,13 @@ public abstract class Tetromino {
 	protected SpaceNode square4;
 	
 	protected boolean active; // va servir a savoir quand spwaner les autre pieces
-	protected GamePanel game; // Pour pouvoir spawner des nouveaux tetrominos! LOL
+	//protected GamePanel game; // Pour pouvoir spawner des nouveaux tetrominos! LOL
+	protected Tetromino(){
+		
+	}
 	
-	public Tetromino(SpaceNode space, GamePanel fame){
-	    game = fame; // Rock'n'roll baby! LOL  -Loli 
+	public Tetromino(SpaceNode space){
+	    //game = fame; // Rock'n'roll baby! LOL  -Lolicon 
 	    active = true;
 	    square1 = space;
 	}
@@ -37,7 +39,7 @@ public abstract class Tetromino {
 		g2d.setTransform(matBackup);
 	}
 	
-	public abstract void goDown();
+	public abstract boolean goDown();
 	
 	public abstract void goLeft();
 	
