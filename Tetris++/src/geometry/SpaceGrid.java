@@ -6,12 +6,21 @@ import java.awt.geom.AffineTransform;
 
 public class SpaceGrid {
 	SpaceNode[][] grid;
+	SpaceNode[][] ghostGrid;
 	
 	public SpaceGrid(int columns, int lines, int size){
 		grid = new SpaceNode[columns][lines];
+		ghostGrid = new SpaceNode[columns][4];
+		
 		for(int i = 0; i<lines;  i++){
 			for(int j = 0; j<columns; j++){
 				grid[j][i] = new SpaceNode(size, j, i);
+			}
+		}
+		
+		for(int i = 0; i < 4; i++){
+			for(int j = 0; j < columns; j++){
+				ghostGrid[j][i] = new SpaceNode(size, j, i);
 			}
 		}
 		
@@ -26,15 +35,41 @@ public class SpaceGrid {
 				if(i != 0){
 					grid[j][i].setUp(grid[j][i-1]);
 				}
+				else{
+					grid[j][i].setUp(ghostGrid[j][3]);
+				}
 				if(i != lines-1){
 					grid[j][i].setDown(grid[j][i+1]);
+				}
+			}
+		}
+		
+		for(int i = 0; i<4;  i++){
+			for(int j = 0; j<columns; j++){
+				if(j != 0){
+					ghostGrid[j][i].setLeft(ghostGrid[j-1][i]);	
+				}
+				if(j != columns-1){
+					ghostGrid[j][i].setRight(ghostGrid[j+1][i]);
+				}
+				if(i != 0){
+					ghostGrid[j][i].setUp(ghostGrid[j][i-1]);
+				}
+				if(i != 3){
+					ghostGrid[j][i].setDown(ghostGrid[j][i+1]);
+				}
+				else{
+					ghostGrid[j][i].setDown(grid[j][0]);
 				}
 			}
 		}
 	}
 	
 	public SpaceNode at(int columns, int lines){
-		return grid[columns][lines];
+		if(lines < 0){
+			return ghostGrid[columns][lines+4];
+		}
+		else return grid[columns][lines];
 	}
 	
 	public void draw(Graphics2D g2d) { // 

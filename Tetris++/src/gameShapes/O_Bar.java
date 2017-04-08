@@ -18,7 +18,7 @@ public class O_Bar extends Tetromino{
 	public void goDown(){
 		if(square4.getDown() == null || square3.getDown().getOccupied() || square4.getDown().getOccupied()){ //permet de detecter la collision par en-bas
 		    active = false; // qd active est faux on transfet le controle aux  enfants (autre pieces)
-		    game.spawnTetromino(4, 2); //(spawn la nouvelle piece)
+		    game.spawnTetromino(); //(spawn la nouvelle piece)
 			return;
 		}
 		if(active) {
