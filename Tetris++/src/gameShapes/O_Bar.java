@@ -8,69 +8,26 @@ public class O_Bar extends Tetromino{
 	
 	public O_Bar(SpaceNode space){
 		super(space);
-		square2 = space.getRight();
-		square3 = space.getDown();
-		square4 = space.getDown().getRight();
-		Occupied();
+		squares.add(space);
+		squares.add(space.getRight());
+		squares.add(space.getDown());
+		squares.add(space.getDown().getRight());
+		
+		squaresToCheckDown.add(squares.get(2));
+		squaresToCheckDown.add(squares.get(3));
+		
+		squaresToCheckLeft.add(squares.get(0));
+		squaresToCheckLeft.add(squares.get(2));
+		
+		squaresToCheckRight.add(squares.get(1));
+		squaresToCheckRight.add(squares.get(3));
+		
+		setSquaresOccupied(true);
+		color = Color.YELLOW;
+		setTheColor();
 	}
 	
-	public boolean goDown(){
-		if(square4.getDown() == null || square3.getDown().getOccupied() || square4.getDown().getOccupied()){ //permet de detecter la collision par en-bas
-		    active = false; // qd active est faux on transfet le controle aux  enfants (autre pieces)
-			return false;
-		}
-		if(active) {
-		    square1.setOccupied(false);
-	        square2.setOccupied(false);
-	        square4 = square4.getDown();
-	        square3 = square3.getDown();
-	        square2 = square2.getDown();
-	        square1 = square1.getDown();
-	        square3.setOccupied(true);
-	        square4.setOccupied(true);
-			setTheColor();
-		}
-		return true;
-	}
-	
-	public void goLeft(){
-		if(square1.getLeft() == null || square1.getLeft().getOccupied() || square3.getLeft().getOccupied()){
-			return;
-		}
-		if(active) {
-		    square2.setOccupied(false);
-		    square4.setOccupied(false);
-		    square1 = square1.getLeft();
-		    square3 = square3.getLeft();
-		    square2 = square2.getLeft();
-		    square4 = square4.getLeft();
-		    square1.setOccupied(true);
-		    square3.setOccupied(true);
-			setTheColor();
-		}
-	}
-	
-	public void goRight(){
-		if(square2.getRight() == null || square2.getRight().getOccupied() || square4.getRight().getOccupied()){
-		    return;
-		}
-		if(active) {
-		    square1.setOccupied(false);
-		    square3.setOccupied(false);
-		    square2 = square2.getRight();
-		    square4 = square4.getRight();
-		    square1 = square1.getRight();
-		    square3 = square3.getRight();
-		    square2.setOccupied(true);
-		    square4.setOccupied(true);
-			setTheColor();
-		}
-	}
-	
-	public void setTheColor(){
-		square1.setNodeColor(Color.YELLOW);
-		square2.setNodeColor(Color.YELLOW);
-		square3.setNodeColor(Color.YELLOW);
-		square4.setNodeColor(Color.YELLOW);
+	public void rotateClockwise() {
+		
 	}
 }

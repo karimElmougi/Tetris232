@@ -2,6 +2,7 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 public class SpaceNode {
 	protected Color color;
@@ -12,7 +13,7 @@ public class SpaceNode {
 	private int size;
 	private int column;
 	private int line;
-	boolean isOccupied = false;
+	boolean isOccupied;
 	
 	public SpaceNode(int size, int columns, int line){
 		this.size = size;
@@ -22,12 +23,16 @@ public class SpaceNode {
 		left = null;
 		up = null;
 		down = null;
+		isOccupied = false;
 	}
 	
 	public void drawSquare(Graphics2D g2d){
+		AffineTransform matBackup = new AffineTransform(g2d.getTransform());
 		if(isOccupied){
+			g2d.setColor(color);
 			g2d.fillRect(getX(), getY(), getSize(), getSize());
 		}
+		g2d.setTransform(matBackup);
 	}
 	
 	public int getSize() {

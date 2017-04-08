@@ -46,6 +46,9 @@ public class GamePanel extends JPanel implements Runnable{
 				if(e.getKeyCode() == KeyEvent.VK_LEFT){
 					activePiece.goLeft();
 				}
+				if(e.getKeyCode() == KeyEvent.VK_D){
+					//activePiece.rotateClockwise();
+				}
 				repaint();
 			}
 
@@ -66,34 +69,33 @@ public class GamePanel extends JPanel implements Runnable{
 		int position = generator.nextInt(7);
 	    switch(position){
 	    	case 0:
-	    		activePiece = new O_Bar(gameGrid.at(4, -3));
+	    		activePiece = new O_Bar(gameGrid.at(4, -2));
 	    		break;
 	    		
 	    	case 1:
-	    		activePiece = new J_Bar(gameGrid.at(4, -3));
+	    		activePiece = new J_Bar(gameGrid.at(4, -2));
 	    		break;
 	    		
 	    	case 2:
-	    		activePiece = new L_Bar(gameGrid.at(4, -3));
+	    		activePiece = new L_Bar(gameGrid.at(4, -2));
 	    		break;
 	    		
 	    	case 3:
-	    		activePiece = new T_Bar(gameGrid.at(4, -4));
+	    		activePiece = new T_Bar(gameGrid.at(4, -2));
 	    		break;
 	    		
 	    	case 4:
-	    		activePiece = new I_Bar(gameGrid.at(4, -3));
+	    		activePiece = new I_Bar(gameGrid.at(4, -2));
 	    		break;
 	    		
 	    	case 5:
-	    		activePiece = new S_Bar(gameGrid.at(4, -3));
+	    		activePiece = new S_Bar(gameGrid.at(4, -2));
 	    		break;
 	    		
 	    	case 6:
-	    		activePiece = new Z_Bar(gameGrid.at(4, -3));
+	    		activePiece = new Z_Bar(gameGrid.at(4, -2));
 	    		break;
 	    }
-	    activePiece.setTheColor();
 	}
 	
 	private void initialize(){

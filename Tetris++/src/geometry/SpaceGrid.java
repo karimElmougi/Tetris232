@@ -12,7 +12,7 @@ public class SpaceGrid {
 	
 	public SpaceGrid(int columns, int lines, int size){
 		grid = new SpaceNode[columns][lines];
-		ghostGrid = new SpaceNode[columns][4];
+		ghostGrid = new SpaceNode[columns][2];
 		
 		for(int i = 0; i<lines;  i++){
 			for(int j = 0; j<columns; j++){
@@ -20,7 +20,7 @@ public class SpaceGrid {
 			}
 		}
 		
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 2; i++){
 			for(int j = 0; j < columns; j++){
 				ghostGrid[j][i] = new SpaceNode(size, j, i);
 			}
@@ -38,7 +38,7 @@ public class SpaceGrid {
 					grid[j][i].setUp(grid[j][i-1]);
 				}
 				else{
-					grid[j][i].setUp(ghostGrid[j][3]);
+					grid[j][i].setUp(ghostGrid[j][1]);
 				}
 				if(i != lines-1){
 					grid[j][i].setDown(grid[j][i+1]);
@@ -46,7 +46,7 @@ public class SpaceGrid {
 			}
 		}
 		
-		for(int i = 0; i<4;  i++){
+		for(int i = 0; i<2;  i++){
 			for(int j = 0; j<columns; j++){
 				if(j != 0){
 					ghostGrid[j][i].setLeft(ghostGrid[j-1][i]);	
@@ -57,7 +57,7 @@ public class SpaceGrid {
 				if(i != 0){
 					ghostGrid[j][i].setUp(ghostGrid[j][i-1]);
 				}
-				if(i != 3){
+				if(i != 1){
 					ghostGrid[j][i].setDown(ghostGrid[j][i+1]);
 				}
 				else{
@@ -69,7 +69,7 @@ public class SpaceGrid {
 	
 	public SpaceNode at(int columns, int lines){
 		if(lines < 0){
-			return ghostGrid[columns][lines+4];
+			return ghostGrid[columns][lines+2];
 		}
 		else return grid[columns][lines];
 	}

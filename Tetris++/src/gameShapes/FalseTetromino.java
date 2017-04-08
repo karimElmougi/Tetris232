@@ -25,17 +25,8 @@ public class FalseTetromino extends Tetromino{
 		}
 		return true;
 	}
-
-	@Override
-	public void goLeft() {
-	}
-
-	@Override
-	public void goRight() {
-	}
-
-	@Override
-	public void setTheColor() {
+	
+	public void rotateClockwise() {
 	}
 
 }
