@@ -7,8 +7,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileFilter;
 import java.util.Random;
 
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -23,6 +26,7 @@ import gameShapes.Tetromino;
 import gameShapes.Z_Bar;
 import geometry.GridOverlay;
 import geometry.SpaceGrid;
+import saveLoad.Load;
 import saveLoad.Save;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -77,18 +81,16 @@ public class GamePanel extends JPanel implements Runnable{
 					Save savefile = new Save(gameGrid);
 					savefile.writeToFile("Fichier.txt");
 				}
-				/*if(e.getKeyCode() == KeyEvent.VK_L){
-					String filePath = System.getProperty("user.home");
+				if(e.getKeyCode() == KeyEvent.VK_L){
+					/*String filePath = System.getProperty("user.home");
 					File mainDirectory = new File(filePath);
 				    if (!mainDirectory.exists()) {
 				      mainDirectory.mkdir();
 				    }
 				    JFileChooser openFile = new JFileChooser(mainDirectory);
 				    
-				    FileFilter fileTypeFilter = new FileFilter()
-				    {
-				      public boolean accept(File file)
-				      {
+				    FileFilter fileTypeFilter = new FileFilter() {
+				      public boolean accept(File file) {
 				        if (file.isDirectory()) {
 				          return true;
 				        }
@@ -99,8 +101,7 @@ public class GamePanel extends JPanel implements Runnable{
 				        return false;
 				      }
 				      
-				      public String getDescription()
-				      {
+				      public String getDescription() {
 				        return ".txt";
 				      }
 				    };
@@ -108,14 +109,14 @@ public class GamePanel extends JPanel implements Runnable{
 				    openFile.setFileFilter((javax.swing.filechooser.FileFilter) fileTypeFilter);
 				    openFile.showOpenDialog(null);
 				    File fileToLoad = openFile.getSelectedFile();
-				    if ((fileToLoad == null) || (!fileToLoad.getName().endsWith(".txt")))
-				    {
+				    if ((fileToLoad == null) || (!fileToLoad.getName().endsWith(".txt"))) {
 				      return;
 				    }
 				    //.read(fileToLoad); // loader le fichier
-				    
+				    */
+					Load loader = new Load(new File("fichier.txt"), gameGrid);
+					gameGrid = loader.loadFile();
 				}
-				*/
 				repaint();
 			}
 
