@@ -60,6 +60,15 @@ public abstract class Tetromino {
 		return true;
 	}
 	
+	private boolean checkForGameOver() {
+		for (SpaceNode square : squares) {
+			if (square.getLine() < 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	protected void setTheColor() {
 		for (SpaceNode square : squares) {
 			square.setNodeColor(color);
@@ -89,6 +98,9 @@ public abstract class Tetromino {
 			setSquaresOccupied(true);
 			setTheColor();
 			return true;
+		}
+		if (checkForGameOver()) {
+			System.out.println("Game Over!");
 		}
 		return false;
 	}

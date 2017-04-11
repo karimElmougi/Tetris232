@@ -23,7 +23,7 @@ public class SpaceGrid {
 		
 		for(int i = 0; i < 2; i++){
 			for(int j = 0; j < columns; j++){
-				ghostGrid[j][i] = new SpaceNode(size, j, i);
+				ghostGrid[j][i] = new SpaceNode(size, j, i - 2);
 			}
 		}
 		
