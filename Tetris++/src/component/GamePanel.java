@@ -2,13 +2,17 @@ package component;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 
 import gameShapes.I_Bar;
 import gameShapes.J_Bar;
@@ -20,6 +24,7 @@ import gameShapes.Tetromino;
 import gameShapes.Z_Bar;
 import geometry.GridOverlay;
 import geometry.SpaceGrid;
+import saveLoad.Load;
 import saveLoad.Save;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -27,36 +32,93 @@ public class GamePanel extends JPanel implements Runnable{
 	private GridOverlay overlay;
 	private boolean initialized = false;
 	private SpaceGrid gameGrid;
+	private boolean running;
+	private JLabel gameOverLabel;
 	
 	private Tetromino activePiece;
-
 
 	public GamePanel(){
 		setPreferredSize(new Dimension(250, 500));
 		setBackground(Color.BLACK);
 		setFocusable(true);
+		running = true;
+		
+		gameOverLabel = new JLabel("Game Over");
+		gameOverLabel.setVisible(false);
+		gameOverLabel.setForeground(Color.WHITE);
+		gameOverLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
+		this.add(gameOverLabel);
 		
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_DOWN){
-					activePiece.goDown();
+					if (running) {
+						activePiece.goDown();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-					activePiece.goRight();
+					if (running) {
+						activePiece.goRight();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_LEFT){
-					activePiece.goLeft();
+					if (running) {
+						activePiece.goLeft();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_D){
 					activePiece.rotateClockwise();
 				}
 				if(e.getKeyCode() == KeyEvent.VK_A){
 					activePiece.rotateCounterClockwise();
+
+					if (running) {
+						//activePiece.rotateClockwise();
+					}
+				}
+				if(e.getKeyCode() == KeyEvent.VK_P){
+					running = !running;
 				}
 				if( (e.getKeyCode() == KeyEvent.VK_S) && (e.getModifiers()&KeyEvent.CTRL_MASK) !=0) {
 					Save savefile = new Save(gameGrid);
 					savefile.writeToFile("Fichier.txt");
+				}
+				if(e.getKeyCode() == KeyEvent.VK_L){
+					/*String filePath = System.getProperty("user.home");
+					File mainDirectory = new File(filePath);
+				    if (!mainDirectory.exists()) {
+				      mainDirectory.mkdir();
+				    }
+				    JFileChooser openFile = new JFileChooser(mainDirectory);
+				    
+				    FileFilter fileTypeFilter = new FileFilter() {
+				      public boolean accept(File file) {
+				        if (file.isDirectory()) {
+				          return true;
+				        }
+				        String path = file.getAbsolutePath();
+				        if (path.endsWith(".txt")) {
+				          return true;
+				        }
+				        return false;
+				      }
+				      
+				      public String getDescription() {
+				        return ".txt";
+				      }
+				    };
+				    openFile.addChoosableFileFilter((javax.swing.filechooser.FileFilter) fileTypeFilter);
+				    openFile.setFileFilter((javax.swing.filechooser.FileFilter) fileTypeFilter);
+				    openFile.showOpenDialog(null);
+				    File fileToLoad = openFile.getSelectedFile();
+				    if ((fileToLoad == null) || (!fileToLoad.getName().endsWith(".txt"))) {
+				      return;
+				    }
+				    //.read(fileToLoad); // loader le fichier
+				    */
+					Load loader = new Load(new File("fichier.txt"), gameGrid);
+					gameGrid = loader.loadFile();
 				}
 				repaint();
 			}
@@ -83,11 +145,11 @@ public class GamePanel extends JPanel implements Runnable{
 	    		break;
 	    		
 	    	case 1:
-	    		activePiece = new J_Bar(gameGrid.at(4, -2));
+	    		activePiece = new J_Bar(gameGrid.at(3, -2));
 	    		break;
 	    		
 	    	case 2:
-	    		activePiece = new L_Bar(gameGrid.at(4, -2));
+	    		activePiece = new L_Bar(gameGrid.at(5, -2));
 	    		break;
 	    		
 	    	case 3:
@@ -95,7 +157,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    		break;
 	    		
 	    	case 4:
-	    		activePiece = new I_Bar(gameGrid.at(4, -2));
+	    		activePiece = new I_Bar(gameGrid.at(3, -2));
 	    		break;
 	    		
 	    	case 5:
@@ -103,7 +165,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    		break;
 	    		
 	    	case 6:
-	    		activePiece = new Z_Bar(gameGrid.at(4, -2));
+	    		activePiece = new Z_Bar(gameGrid.at(3, -2));
 	    		break;
 	    }
 	}
@@ -137,9 +199,15 @@ public class GamePanel extends JPanel implements Runnable{
 	public void run() {
 		boolean testb = true;
 		while(testb){
-			if(!activePiece.goDown()){
-				gameGrid.checkFill();
-				spawnTetromino();
+			if (running) {
+				if(!activePiece.goDown()) {
+					gameGrid.checkFill();
+					if (activePiece.isOutsideGrid()) {
+						running = false;
+						gameOverLabel.setVisible(true);
+					}
+					spawnTetromino();
+				}
 			}
 			repaint();
 			
@@ -156,5 +224,8 @@ public class GamePanel extends JPanel implements Runnable{
 		Thread proc = new Thread(GamePanel.this);
 		proc.start();
 	}
-
+	
+	public SpaceGrid getGrid() {
+		return gameGrid;
+	}
 }

@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 public class SpaceNode {
-	protected Color color;
+	private Color color;
 	private SpaceNode right;
 	private SpaceNode left;
 	private SpaceNode up;
@@ -15,7 +15,7 @@ public class SpaceNode {
 	private int line;
 	boolean isOccupied;
 	
-	public SpaceNode(int size, int columns, int line){
+	public SpaceNode(int size, int columns, int line) {
 		this.size = size;
 		this.column = columns;
 		this.line = line;

@@ -15,7 +15,7 @@ public class GridOverlay {
 		height = h;
 	}
 	
-	public void draw(Graphics2D g2d){
+	public void draw(Graphics2D g2d) {
 		AffineTransform matBackup = new AffineTransform(g2d.getTransform());
 		g2d.setColor(Color.DARK_GRAY);
 		for(int i = 1; i<=width; i++){

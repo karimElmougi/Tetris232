@@ -7,43 +7,24 @@ import java.awt.geom.AffineTransform;
 import gameShapes.FalseTetromino;
 
 public class SpaceGrid {
-	SpaceNode[][] grid;
-
-	SpaceNode[][] ghostGrid;
+	private SpaceNode[][] grid;
+	private SpaceNode[][] ghostGrid;
+	private int lines;
+	private int columns;
+	private int size;
 	
-	public SpaceGrid(int columns, int lines, int size){
+	public SpaceGrid(int columns, int lines, int size) {
+		this.size = size;
+		this.columns = columns;
+		this.lines = lines;
 		grid = new SpaceNode[columns][lines];
 		ghostGrid = new SpaceNode[columns][2];
 		
-		for(int i = 0; i<lines;  i++){
-			for(int j = 0; j<columns; j++){
-				grid[j][i] = new SpaceNode(size, j, i);
-			}
-		}
+		initializeGrid();
 		
 		for(int i = 0; i < 2; i++){
 			for(int j = 0; j < columns; j++){
-				ghostGrid[j][i] = new SpaceNode(size, j, i);
-			}
-		}
-		
-		for(int i = 0; i<lines;  i++){
-			for(int j = 0; j<columns; j++){
-				if(j != 0){
-					grid[j][i].setLeft(grid[j-1][i]);	
-				}
-				if(j != columns-1){
-					grid[j][i].setRight(grid[j+1][i]);
-				}
-				if(i != 0){
-					grid[j][i].setUp(grid[j][i-1]);
-				}
-				else{
-					grid[j][i].setUp(ghostGrid[j][1]);
-				}
-				if(i != lines-1){
-					grid[j][i].setDown(grid[j][i+1]);
-				}
+				ghostGrid[j][i] = new SpaceNode(size, j, i - 2);
 			}
 		}
 		
@@ -105,8 +86,37 @@ public class SpaceGrid {
 			}
 		}
 	}
+	
 	public SpaceNode[][] getGrid() {
 		return grid;
+	}
+	
+	public void initializeGrid() {
+		for(int i = 0; i<lines;  i++){
+			for(int j = 0; j<columns; j++){
+				grid[j][i] = new SpaceNode(size, j, i);
+			}
+		}
+		
+		for(int i = 0; i<lines;  i++){
+			for(int j = 0; j<columns; j++){
+				if(j != 0){
+					grid[j][i].setLeft(grid[j-1][i]);	
+				}
+				if(j != columns-1){
+					grid[j][i].setRight(grid[j+1][i]);
+				}
+				if(i != 0){
+					grid[j][i].setUp(grid[j][i-1]);
+				}
+				else{
+					grid[j][i].setUp(ghostGrid[j][1]);
+				}
+				if(i != lines-1){
+					grid[j][i].setDown(grid[j][i+1]);
+				}
+			}
+		}
 	}
 
 }
