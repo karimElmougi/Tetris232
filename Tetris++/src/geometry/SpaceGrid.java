@@ -101,6 +101,7 @@ public class SpaceGrid {
 					FalseTetromino fTetromino = new FalseTetromino(grid[0][ligneD]);
 					fTetromino.goDown();
 				}
+				ligne++;
 			}
 		}
 	}

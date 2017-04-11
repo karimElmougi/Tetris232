@@ -49,7 +49,10 @@ public class GamePanel extends JPanel implements Runnable{
 					activePiece.goLeft();
 				}
 				if(e.getKeyCode() == KeyEvent.VK_D){
-					//activePiece.rotateClockwise();
+					activePiece.rotateClockwise();
+				}
+				if(e.getKeyCode() == KeyEvent.VK_A){
+					activePiece.rotateCounterClockwise();
 				}
 				if( (e.getKeyCode() == KeyEvent.VK_S) && (e.getModifiers()&KeyEvent.CTRL_MASK) !=0) {
 					Save savefile = new Save(gameGrid);
@@ -73,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void spawnTetromino() {
 		Random generator = new Random();
 		int position = generator.nextInt(7);
+		//position=6;
 	    switch(position){
 	    	case 0:
 	    		activePiece = new O_Bar(gameGrid.at(4, -2));

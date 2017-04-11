@@ -13,6 +13,7 @@ public abstract class Tetromino {
 	protected ArrayList<SpaceNode> squaresToCheckLeft;
 	protected ArrayList<SpaceNode> squaresToCheckRight;
 	protected Color color;
+	protected int rotationState = 1;
 	
 	protected boolean active; // va servir a savoir quand spawner les autre pieces
 	
@@ -120,7 +121,7 @@ public abstract class Tetromino {
 	
 	public void goRight() {
 		if(checkRight()) {
-setSquaresOccupied(false);
+			setSquaresOccupied(false);
 			
 			for(int i = 0; i < squares.size(); i++){
 				squares.set(i, squares.get(i).getRight());
@@ -151,5 +152,41 @@ setSquaresOccupied(false);
 		g2d.setTransform(matBackup);
 	}
 	
-	//public abstract void rotateClockwise();
+	public void rotateClockwise(){
+		if(rotationState == 1){
+			setRotationStateTwo();
+		}
+		else if(rotationState == 2){
+			setRotationStateThree();
+		}
+		else if(rotationState == 3){
+			setRotationStateFour();
+		}
+		else if( rotationState == 4){
+			setRotationStateOne();
+		}
+		setTheColor();
+	}
+	
+	public void rotateCounterClockwise(){
+		if(rotationState == 1){
+			setRotationStateFour();
+		}
+		else if(rotationState == 2){
+			setRotationStateOne();
+		}
+		else if(rotationState == 3){
+			setRotationStateTwo();
+		}
+		else if( rotationState == 4){
+			setRotationStateThree();
+		}
+		
+		setTheColor();
+	}
+	
+	public abstract void setRotationStateOne();
+	public abstract void setRotationStateTwo();
+	public abstract void setRotationStateThree();
+	public abstract void setRotationStateFour();
 }

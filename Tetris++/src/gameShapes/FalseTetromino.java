@@ -29,4 +29,34 @@ public class FalseTetromino extends Tetromino{
 	public void rotateClockwise() {
 	}
 
+	@Override
+	public void rotateCounterClockwise() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setRotationStateOne() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setRotationStateTwo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setRotationStateThree() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setRotationStateFour() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
