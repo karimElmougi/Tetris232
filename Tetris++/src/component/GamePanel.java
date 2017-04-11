@@ -2,15 +2,14 @@ package component;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileFilter;
 import java.util.Random;
-import java.io.*;
 
-import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -31,29 +30,48 @@ public class GamePanel extends JPanel implements Runnable{
 	private GridOverlay overlay;
 	private boolean initialized = false;
 	private SpaceGrid gameGrid;
+	private boolean running;
+	private JLabel gameOverLabel;
 	
 	private Tetromino activePiece;
-
 
 	public GamePanel(){
 		setPreferredSize(new Dimension(250, 500));
 		setBackground(Color.BLACK);
 		setFocusable(true);
+		running = true;
+		
+		gameOverLabel = new JLabel("Game Over");
+		gameOverLabel.setVisible(false);
+		gameOverLabel.setForeground(Color.WHITE);
+		gameOverLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
+		this.add(gameOverLabel);
 		
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_DOWN){
-					activePiece.goDown();
+					if (running) {
+						activePiece.goDown();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-					activePiece.goRight();
+					if (running) {
+						activePiece.goRight();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_LEFT){
-					activePiece.goLeft();
+					if (running) {
+						activePiece.goLeft();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_D){
-					//activePiece.rotateClockwise();
+					if (running) {
+						//activePiece.rotateClockwise();
+					}
+				}
+				if(e.getKeyCode() == KeyEvent.VK_P){
+					running = !running;
 				}
 				if( (e.getKeyCode() == KeyEvent.VK_S) && (e.getModifiers()&KeyEvent.CTRL_MASK) !=0) {
 					Save savefile = new Save(gameGrid);
@@ -176,9 +194,15 @@ public class GamePanel extends JPanel implements Runnable{
 	public void run() {
 		boolean testb = true;
 		while(testb){
-			if(!activePiece.goDown()){
-				gameGrid.checkFill();
-				spawnTetromino();
+			if (running) {
+				if(!activePiece.goDown()) {
+					gameGrid.checkFill();
+					if (activePiece.isOutsideGrid()) {
+						running = false;
+						gameOverLabel.setVisible(true);
+					}
+					spawnTetromino();
+				}
 			}
 			repaint();
 			
@@ -195,5 +219,8 @@ public class GamePanel extends JPanel implements Runnable{
 		Thread proc = new Thread(GamePanel.this);
 		proc.start();
 	}
-
+	
+	public SpaceGrid getGrid() {
+		return gameGrid;
+	}
 }
