@@ -140,11 +140,11 @@ public class GamePanel extends JPanel implements Runnable{
 	    		break;
 	    		
 	    	case 1:
-	    		activePiece = new J_Bar(gameGrid.at(4, -2));
+	    		activePiece = new J_Bar(gameGrid.at(3, -2));
 	    		break;
 	    		
 	    	case 2:
-	    		activePiece = new L_Bar(gameGrid.at(4, -2));
+	    		activePiece = new L_Bar(gameGrid.at(5, -2));
 	    		break;
 	    		
 	    	case 3:
@@ -152,7 +152,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    		break;
 	    		
 	    	case 4:
-	    		activePiece = new I_Bar(gameGrid.at(4, -2));
+	    		activePiece = new I_Bar(gameGrid.at(3, -2));
 	    		break;
 	    		
 	    	case 5:
@@ -160,7 +160,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    		break;
 	    		
 	    	case 6:
-	    		activePiece = new Z_Bar(gameGrid.at(4, -2));
+	    		activePiece = new Z_Bar(gameGrid.at(3, -2));
 	    		break;
 	    }
 	}
