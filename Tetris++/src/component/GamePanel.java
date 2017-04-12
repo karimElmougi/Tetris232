@@ -8,12 +8,13 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
+import Observers.Observer;
 import gameShapes.I_Bar;
 import gameShapes.J_Bar;
 import gameShapes.L_Bar;
@@ -36,6 +37,37 @@ public class GamePanel extends JPanel implements Runnable{
 	private JLabel gameOverLabel;
 	
 	private Tetromino activePiece;
+	
+
+	// observer thing
+	   private ArrayList<Observer> observers = new ArrayList<Observer>();
+	   
+
+	   public void attach(Observer observer){
+	      observers.add(observer);		
+	   }
+
+	   public void notifyAllObservers(){
+	      for (Observer observer : observers) {
+	         observer.update();
+	      }
+	   } 
+
+	
+	private int Thepoints;
+	
+	public void setThepoints()
+	{
+		this.Thepoints = gameGrid.getPoints();
+		notifyAllObservers();
+	}
+	
+	public int getThepoints()
+	{
+		return this.Thepoints;
+	}
+	
+  // fin du observer
 
 	public GamePanel(){
 		setPreferredSize(new Dimension(250, 500));
@@ -201,7 +233,7 @@ public class GamePanel extends JPanel implements Runnable{
 		while(testb){
 			if (running) {
 				if(!activePiece.goDown()) {
-					gameGrid.checkFill();
+					if(gameGrid.checkFill()) this.setThepoints();
 					if (activePiece.isOutsideGrid()) {
 						running = false;
 						gameOverLabel.setVisible(true);

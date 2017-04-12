@@ -12,6 +12,7 @@ public class SpaceGrid {
 	private int lines;
 	private int columns;
 	private int size;
+	private int Points;
 	
 	public SpaceGrid(int columns, int lines, int size) {
 		this.size = size;
@@ -68,13 +69,15 @@ public class SpaceGrid {
         g2d.setTransform(matBackup);
 	}
 	
-	public void checkFill(){
+	public boolean checkFill(){
+		int pts = 0;
 		for(int ligne = grid[0].length-1; ligne>=0; ligne--){
 			boolean isFull = true;
 			for(int colonne = 0; colonne < grid.length; colonne++){
 				isFull = isFull && grid[colonne][ligne].getOccupied();
 			}
 			if(isFull){
+				pts++;
 				for(int colonne = 0; colonne < grid.length; colonne++){
 					grid[colonne][ligne].setOccupied(false);
 				}
@@ -85,6 +88,11 @@ public class SpaceGrid {
 				ligne++;
 			}
 		}
+		
+		setPoints(pts);
+		 
+		 if (pts != 0) return true;
+		 else return false;
 	}
 	
 	public SpaceNode[][] getGrid() {
@@ -119,4 +127,17 @@ public class SpaceGrid {
 		}
 	}
 
+	private void setPoints(int a)
+	{   int bonus = 0;
+	    if(a==2) bonus = 10;
+	    else if(a>=3) bonus = 50;
+		this.Points += (a*10 + bonus);
+	}
+	
+	
+	
+	public int getPoints()
+	{
+		return this.Points;
+	}
 }
