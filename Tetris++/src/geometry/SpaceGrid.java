@@ -21,7 +21,7 @@ public class SpaceGrid {
 		grid = new SpaceNode[columns][lines];
 		ghostGrid = new SpaceNode[columns][2];
 		
-		initializeGrid();
+		initializeGrid(); 
 		
 		for(int i = 0; i < 2; i++){
 			for(int j = 0; j < columns; j++){

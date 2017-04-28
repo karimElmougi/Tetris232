@@ -32,8 +32,8 @@ public class Save {
 				
 					if(space.getGrid()[colonne][ligne].getOccupied()){
 						
-					 x= space.getGrid()[colonne][ligne].getX()/ space.getGrid()[colonne][ligne].getSize();
-					 y =	space.getGrid()[colonne][ligne].getY()/ space.getGrid()[colonne][ligne].getSize();
+					 x = space.getGrid()[colonne][ligne].getX()/ space.getGrid()[colonne][ligne].getSize();
+					 y = space.getGrid()[colonne][ligne].getY()/ space.getGrid()[colonne][ligne].getSize();
 					 R = space.getGrid()[colonne][ligne].getColor().getRed();
 					 G = space.getGrid()[colonne][ligne].getColor().getGreen();
 					 B = space.getGrid()[colonne][ligne].getColor().getBlue();
